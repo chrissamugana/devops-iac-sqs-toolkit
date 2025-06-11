@@ -1,0 +1,35 @@
+# sqs_queues Terraform Module
+
+This Terraform module provisions AWS SQS queues and their dead-letter queues (DLQs), along with IAM policies and optionally IAM roles.
+
+---
+
+## Inputs
+
+| Name         | Type          | Description                                                  | Required | Default  |
+|--------------|---------------|--------------------------------------------------------------|----------|----------|
+| queue_names  | list(string)  | List of main SQS queue names. DLQs are created automatically | yes      |          |
+| create_roles | bool          | Whether to create IAM roles for the policies                 | no       | false    |
+
+---
+
+## Outputs
+
+| Name               | Description                                                       |
+|--------------------|-------------------------------------------------------------------|
+| queue_arns          | List of ARNs for all created queues (main and DLQs)              |
+| consume_policy_arn  | ARN of the IAM policy for consuming messages                      |
+| write_policy_arn    | ARN of the IAM policy for sending messages to main queues        |
+| consume_role_arn    | (If `create_roles`=true) ARN of the consumer IAM role            |
+| write_role_arn      | (If `create_roles`=true) ARN of the producer IAM role            |
+
+---
+
+## Usage example
+
+```hcl
+module "sqs" {
+  source       = "./sqs_queues"
+  queue_names  = ["priority-10", "priority-100"]
+  create_roles = true
+}
