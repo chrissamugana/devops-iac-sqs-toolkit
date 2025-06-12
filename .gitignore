@@ -62,3 +62,4 @@ docs/_build/
 .terraform/
 *.tfstate
 *.tfstate.backup
+sqs_queues/.terraform/
