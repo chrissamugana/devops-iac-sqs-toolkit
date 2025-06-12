@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"  # Change to your region
+  region = "us-east-1"  
 }
 
 resource "aws_sqs_queue" "dlqs" {
