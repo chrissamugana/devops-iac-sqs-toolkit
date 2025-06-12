@@ -1,8 +1,3 @@
-"""
-Script to check how many messages are currently in specified AWS SQS queues 
-and their corresponding dead-letter queues (DLQs). Useful for monitoring queue backlogs.
-"""
-
 import boto3
 import sys
 import json
@@ -10,10 +5,6 @@ from botocore.exceptions import ClientError
 from typing import List, Dict, Optional
 
 def get_queue_message_count(queue_name: str, sqs_client) -> Optional[int]:
-    """
-    Fetch the approximate number of messages in the given SQS queue.
-    Returns None if the queue doesn't exist or can't be accessed.
-    """
     try:
         queue_url = sqs_client.get_queue_url(QueueName=queue_name)['QueueUrl']
         attrs = sqs_client.get_queue_attributes(
@@ -31,11 +22,7 @@ def get_queue_message_count(queue_name: str, sqs_client) -> Optional[int]:
         return None
 
 def get_queues_message_totals(queue_names: List[str]) -> Dict[str, object]:
-    """
-    For each queue in the list, get message counts for the main queue 
-    and its dead-letter queue (assumed to be named '{queue_name}-dlq').
-    """
-    sqs = boto3.client('sqs')
+    sqs = boto3.client('sqs', region_name='eu-west-2')
     results = {}
 
     for queue_name in queue_names:
