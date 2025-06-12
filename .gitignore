@@ -63,3 +63,8 @@ docs/_build/
 *.tfstate
 *.tfstate.backup
 sqs_queues/.terraform/
+.terraform.lock.hcl/
+.tfplan/
+sqs_queues/.terraform/providers/
+
+
